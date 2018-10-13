@@ -13,18 +13,13 @@ transform p
 : f  fov >rad 2 / tan ;
 : asp  viewwh / ;
 
-: ofs  displaywh -2 2 2/ viewwh 2 -2 2/ 2+ ;
-
 : 3d
     p al_identity_transform
     p 0 0 -1 3af al_translate_transform_3d
     p   asp f * negate 1af   f 1af           1 1af
         asp f * 1af          f negate 1af    1000 1af
     al_perspective_transform
-\     p 1 globalscale / dup dup  3af al_scale_transform_3d
-\     p ofs 0 3af al_translate_transform_3d
     p al_use_projection_transform
-    
     ALLEGRO_DEPTH_TEST #1 al_set_render_state
     1 1af al_clear_depth_buffer 
 ;
