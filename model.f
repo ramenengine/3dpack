@@ -80,7 +80,7 @@ transform t
         0 \ vertex decl
         texture@
         0 \ first vertex
-        r> #1 - \ last vertex
+        r> \ last vertex
         mdl @ primtype @
         al_draw_prim
     then ;
