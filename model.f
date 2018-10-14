@@ -59,9 +59,9 @@ defaults >{
 : modelview
     t al_identity_transform
     t scl 3@ 3af al_scale_transform_3d
-    t 0 0 1 3af rtn z@ >rad 1af al_rotate_transform_3d
-    t 0 1 0 3af rtn y@ >rad 1af al_rotate_transform_3d
     t 1 0 0 3af rtn x@ >rad 1af al_rotate_transform_3d
+    t 0 1 0 3af rtn y@ >rad 1af al_rotate_transform_3d
+    t 0 0 1 3af rtn z@ >rad 1af al_rotate_transform_3d
     t pos 3@ 3af al_translate_transform_3d
     t camt al_compose_transform
     t al_use_transform
