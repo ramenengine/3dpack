@@ -56,12 +56,14 @@ defaults >{
     1 1 1 scl 3!
 }
 
+1e 1sf constant (1e)
+0e 1sf constant (0e)
 : modelview
-    t al_identity_transform
+    t identity
     t scl 3@ 3af al_scale_transform_3d
-    t 1 0 0 3af rtn x@ >rad 1af al_rotate_transform_3d
-    t 0 1 0 3af rtn y@ >rad 1af al_rotate_transform_3d
-    t 0 0 1 3af rtn z@ >rad 1af al_rotate_transform_3d
+    t (1e) (0e) dup  rtn x@ 1pf d>r 1sf al_rotate_transform_3d
+    t (0e) (1e) over rtn y@ 1pf d>r 1sf al_rotate_transform_3d
+    t (0e) dup (1e)  rtn z@ 1pf d>r 1sf al_rotate_transform_3d
     t pos 3@ 3af al_translate_transform_3d
     t camt al_compose_transform
     t al_use_transform
@@ -93,11 +95,11 @@ defaults >{
 
 : update-cam
     cam >{
-        camt al_identity_transform
+        camt identity
         camt pos 3@ 3negate 3af al_translate_transform_3d    
-        camt 0 0 1 3af rtn z@ negate >rad 1af al_rotate_transform_3d
-        camt 0 1 0 3af rtn y@ negate >rad 1af al_rotate_transform_3d
-        camt 1 0 0 3af rtn x@ negate >rad 1af al_rotate_transform_3d
+        camt (0e) dup (1e)  rtn z@ negate >rad 1af al_rotate_transform_3d
+        camt (0e) (1e) over rtn y@ negate >rad 1af al_rotate_transform_3d
+        camt (1e) (0e) dup  rtn x@ negate >rad 1af al_rotate_transform_3d
     } ;
     
 : -camt  camt al_identity_transform ;
