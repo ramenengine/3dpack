@@ -1,4 +1,9 @@
 depend 3dpack/v3d.f
+depend ramen/lib/state.f
+
+stage object: cam
+transform t
+transform camt
 
 ALLEGRO_PRIM_LINE_LIST      constant LINE_LIST
 ALLEGRO_PRIM_LINE_STRIP     constant LINE_STRIP
@@ -41,18 +46,16 @@ struct %modeldata
 
 %v3d sizeof field pos
 %v3d sizeof field scl
-%v3d sizeof field rtn  \ tilt, pan, roll  (i.e. pitch, yaw, roll)
+0 field rtn  \ tilt, pan, roll  (i.e. pitch, yaw, roll)
+    var tilt
+    var pan
+    var roll
 var mdl var tex
 
 defaults >{
     1 1 1 scl 3!
 }
 
-: tilt  rtn >x ;
-: pan   rtn >y ;
-: roll  rtn >z ;
-
-transform t
 : modelview
     t al_identity_transform
     t scl 3@ 3af al_scale_transform_3d
@@ -60,6 +63,7 @@ transform t
     t 0 1 0 3af rtn y@ >rad 1af al_rotate_transform_3d
     t 1 0 0 3af rtn x@ >rad 1af al_rotate_transform_3d
     t pos 3@ 3af al_translate_transform_3d
+    t camt al_compose_transform
     t al_use_transform
 ;
 
@@ -67,7 +71,7 @@ transform t
 
 : model  ( -- )
     mdl @ -exit
-    modelview    
+    modelview
     mdl @ indices @ if 
         mdl @ vertices @
         0 \ vertex decl
@@ -83,4 +87,23 @@ transform t
         r> \ last vertex
         mdl @ primtype @
         al_draw_prim
-    then ;
+    then
+;
+
+
+: update-cam
+    cam >{
+        camt al_identity_transform
+        camt pos 3@ 3negate 3af al_translate_transform_3d    
+        camt 0 0 1 3af rtn z@ negate >rad 1af al_rotate_transform_3d
+        camt 0 1 0 3af rtn y@ negate >rad 1af al_rotate_transform_3d
+        camt 1 0 0 3af rtn x@ negate >rad 1af al_rotate_transform_3d
+    } ;
+    
+: -camt  camt al_identity_transform ;
+
+: /model  mdl !  draw> model ;
+
+: /globalmodel  mdl !  draw> +state -camt model -state ;
+
+cam as  :now draw> update-cam ;
