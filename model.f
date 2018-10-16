@@ -3,6 +3,7 @@ depend ramen/lib/state.f
 
 stage object: cam
 transform t
+transform t2
 transform camt
 
 ALLEGRO_PRIM_LINE_LIST      constant LINE_LIST
@@ -58,15 +59,22 @@ defaults >{
 
 1e 1sf constant (1e)
 0e 1sf constant (0e)
+create axis  3 cells allot
 : modelview
     t identity
-    t scl 3@ 3af al_scale_transform_3d
-    t (1e) (0e) dup  rtn x@ 1pf d>r 1sf al_rotate_transform_3d
-    t (0e) (1e) over rtn y@ 1pf d>r 1sf al_rotate_transform_3d
-    t (0e) dup (1e)  rtn z@ 1pf d>r 1sf al_rotate_transform_3d
-    t pos 3@ 3af al_translate_transform_3d
-    t camt al_compose_transform
-    t al_use_transform
+    
+    t (0e) (0e) (1e)  roll @ 1pf d>r 1sf   al_rotate_transform_3d
+    t (0e) (1e) (0e)  pan @ 1pf d>r 1sf   al_rotate_transform_3d    
+    (1e) (0e) (0e) axis 3! 
+    t axis dup >y over >z al_transform_coordinates_3d    
+    t axis 3@  tilt @ 1pf d>r 1sf  al_rotate_transform_3d
+
+    t2 identity
+    t2 scl 3@ 3af al_scale_transform_3d
+    t2 t al_compose_transform
+    t2 pos 3@ 3af al_translate_transform_3d
+    t2 camt al_compose_transform
+    t2 al_use_transform
 ;
 
 : texture@  tex @ dup if >bmp then ;
