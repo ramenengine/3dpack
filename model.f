@@ -101,19 +101,18 @@ create axis  3 cells allot
 ;
 
 
-: update-cam
-    cam >{
-        camt identity
-        camt pos 3@ 3negate 3af al_translate_transform_3d    
-        camt (0e) dup (1e)  rtn z@ negate >rad 1af al_rotate_transform_3d
-        camt (0e) (1e) over rtn y@ negate >rad 1af al_rotate_transform_3d
-        camt (1e) (0e) dup  rtn x@ negate >rad 1af al_rotate_transform_3d
-    } ;
-    
-: -camt  camt al_identity_transform ;
+: camera-transform  ( -- )
+    camt identity
+    camt pos 3@ 3negate 3af al_translate_transform_3d    
+    camt (0e) dup (1e)  rtn z@ negate >rad 1af al_rotate_transform_3d
+    camt (0e) (1e) over rtn y@ negate >rad 1af al_rotate_transform_3d
+    camt (1e) (0e) dup  rtn x@ negate >rad 1af al_rotate_transform_3d
+;
+
 
 : /model  mdl !  draw> model ;
 
-: /globalmodel  mdl !  draw> +state -camt model -state ;
+\ : -camt  camt al_identity_transform ;
+\ : /globalmodel  mdl !  draw> +state -camt model -state ;
 
-cam as  :now draw> update-cam ;
+cam as  :now draw> camera-transform ;
