@@ -4,6 +4,7 @@ depend ramen/lib/state.f
 stage object: cam
 transform t
 transform t2
+transform t3
 transform camt
 
 ALLEGRO_PRIM_LINE_LIST      constant LINE_LIST
@@ -73,6 +74,7 @@ create axis  3 cells allot
     t2 scl 3@ 3af al_scale_transform_3d
     t2 t al_compose_transform
     t2 pos 3@ 3af al_translate_transform_3d
+    t2 t3 16 cells move
     t2 camt al_compose_transform
     t2 al_use_transform
 ;
@@ -117,9 +119,15 @@ create axis  3 cells allot
 
 cam as  :now draw> camera-transform ;
 
+
 0 value (code)
 : veach>  ( modeldata -- <code> )  ( ALLEGRO_VERTEX -- )
     r> to (code)  vertices 2@ for  dup >r  (code) call  r> /ALLEGRO_VERTEX +  loop drop ;
 : transform-model  ( modeldata -- )  \ uses the "t" transform
-    veach>  t swap dup cell+ dup cell+ al_transform_coordinates_3d ;
+    veach>  t swap vtransform ;
 
+
+create (v) 3 cells allot
+: 3f@p  dup sf@ f>p swap cell+ dup sf@ f>p swap cell+ sf@ f>p ;
+: local  ( x y z -- x y z )  \ transform local point  (note: expensive!)
+    modelview  3af (v) 3!  t3 (v) vtransform   (v) 3f@p  ;
