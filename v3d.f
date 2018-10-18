@@ -25,3 +25,5 @@ struct %v3d
 : 3vec  ( tilt pan len -- x y z ) >r 3uvec r> dup dup 3* ;
 
 : 3rnd  >r rot >r 2rnd 2r> rnd ;
+
+: vtransform  ( transform v3d )  dup cell+ dup cell+ al_transform_coordinates_3d ;
