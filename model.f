@@ -63,9 +63,9 @@ create axis  3 cells allot
 : modelview
     t identity
     
-    t (0e) (0e) (1e)  roll @ 1pf d>r 1sf   al_rotate_transform_3d
+    t (1e) (0e) (0e)  roll @ 1pf d>r 1sf   al_rotate_transform_3d
     t (0e) (1e) (0e)  pan @ 1pf d>r 1sf   al_rotate_transform_3d    
-    (1e) (0e) (0e) axis 3! 
+    (0e) (0e) (1e) axis 3! 
     t axis dup >y over >z al_transform_coordinates_3d    
     t axis 3@  tilt @ 1pf d>r 1sf  al_rotate_transform_3d
 
@@ -104,9 +104,9 @@ create axis  3 cells allot
 : camera-transform  ( -- )
     camt identity
     camt pos 3@ 3negate 3af al_translate_transform_3d    
-    camt (0e) dup (1e)  rtn z@ negate >rad 1af al_rotate_transform_3d
-    camt (0e) (1e) over rtn y@ negate >rad 1af al_rotate_transform_3d
-    camt (1e) (0e) dup  rtn x@ negate >rad 1af al_rotate_transform_3d
+    camt (0e) (0e) (1e)  roll @ negate >rad 1af al_rotate_transform_3d
+    camt (0e) (1e) (0e)  pan @  negate >rad 1af al_rotate_transform_3d
+    camt (1e) (0e) (0e)  tilt @ negate >rad 1af al_rotate_transform_3d
 ;
 
 
