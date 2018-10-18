@@ -116,3 +116,10 @@ create axis  3 cells allot
 \ : /globalmodel  mdl !  draw> +state -camt model -state ;
 
 cam as  :now draw> camera-transform ;
+
+0 value (code)
+: veach>  ( modeldata -- <code> )  ( ALLEGRO_VERTEX -- )
+    r> to (code)  vertices 2@ for  dup >r  (code) call  r> /ALLEGRO_VERTEX +  loop drop ;
+: transform-model  ( modeldata -- )  \ uses the "t" transform
+    veach>  t swap dup cell+ dup cell+ al_transform_coordinates_3d ;
+
