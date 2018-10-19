@@ -14,7 +14,7 @@ struct %v3d
 
 
 : 3uvec  ( tilt pan -- x y -z )
-    uvec >r  swap uvec nip  r>  negate ;
+    uvec >r  swap uvec nip  r>  ;
 
 \ : 3uvec  ( tilt pan -- x y z )  swap 1pf d>r 1pf d>r ( f: yaw pitch ) 
 \     fover fcos fover fcos f* f>p
