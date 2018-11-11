@@ -1,3 +1,5 @@
+#1 #9 #0 [ramen] [checkver]
+
 depend ramen/lib/rangetools.f
 depend ramen/lib/draw.f
 depend ramen/lib/cgrid.f

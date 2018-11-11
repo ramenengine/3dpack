@@ -15,12 +15,10 @@ ALLEGRO_PRIM_TRIANGLE_STRIP constant TRIANGLE_STRIP
 ALLEGRO_PRIM_TRIANGLE_FAN   constant TRIANGLE_FAN
 ALLEGRO_PRIM_POINT_LIST     constant POINT_LIST
 
-\ Model data structs
 struct %modeldata
-    %modeldata 2 cells 0 sfield vertices   \ pointer, count
-    %modeldata 2 cells 0 sfield indices    \ pointer, count
-    %modeldata 0 svar primtype
-
+    %modeldata 2 cells sfield vertices   \ pointer, count
+    %modeldata 2 cells sfield indices    \ pointer, count
+    %modeldata svar primtype
 : >count  cell+ ;
 
 : f,  sf, ;
