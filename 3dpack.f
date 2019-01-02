@@ -1,15 +1,6 @@
-depend ramen/lib/rangetools.f
-depend ramen/lib/draw.f
-depend ramen/lib/cgrid.f
-depend ramen/lib/task.f
-depend afkit/lib/kb.f
-depend ramen/lib/audio1.f
-depend ramen/lib/sprites.f
-depend ramen/lib/v2d.f
-depend 3dpack/v3d.f
-depend 3dpack/model.f
-depend ramen/lib/state.f
-depend 3dpack/cam.f
+depend 3dpack/v3d.f       cr .( Loaded vector3d module. ) \ "    
+depend 3dpack/model.f     cr .( Loaded 3d model module. ) \ "
+depend 3dpack/cam3d.f     cr .( Loaded 3d camera module. ) \ "
 
 transform p 
 80 value fov
@@ -33,3 +24,5 @@ transform p
     p al_use_projection_transform    
     ALLEGRO_DEPTH_TEST #0 al_set_render_state
 ;
+
+cam as :now draw> camera-transform ;

@@ -1,5 +1,3 @@
-depend ramen/lib/v2d.f
-
 : posxz@  pos >x @  pos >z @ ; 
 : posxz!  pos >z !  pos >x ! ; 
 

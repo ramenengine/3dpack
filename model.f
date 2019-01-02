@@ -1,7 +1,6 @@
 depend 3dpack/v3d.f
-depend ramen/lib/state.f
 
-stage object: cam
+create cam object
 transform t
 transform t2
 transform t3
@@ -17,9 +16,9 @@ ALLEGRO_PRIM_POINT_LIST     constant POINT_LIST
 
 \ Model data structs
 struct %modeldata
-    %modeldata 2 cells 0 sfield vertices   \ pointer, count
-    %modeldata 2 cells 0 sfield indices    \ pointer, count
-    %modeldata 0 svar primtype
+    %modeldata 2 cells sfield vertices   \ pointer, count
+    %modeldata 2 cells sfield indices    \ pointer, count
+    %modeldata svar primtype
 
 : >count  cell+ ;
 
@@ -116,9 +115,6 @@ create axis  3 cells allot
 
 \ : -camt  camt al_identity_transform ;
 \ : /globalmodel  mdl !  draw> +state -camt model -state ;
-
-cam as  :now draw> camera-transform ;
-
 
 0 value (code)
 : veach>  ( modeldata -- <code> )  ( ALLEGRO_VERTEX -- )
