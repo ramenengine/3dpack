@@ -26,32 +26,35 @@ struct %modeldata
 : v,  ( x y z u v -- )
     1pf 1pf 1pf 1pf 1pf f, f, f, f, f, fore 4@ 4, ;
     
-: vertices:  ( modeldata -- model adr )
+: vertices:  ( modeldata -- modeldata adr )
     here dup third vertices !  white ;
 
-: ;vertices
+: ;vertices  ( modeldata adr -- )
     here swap - /ALLEGRO_VERTEX i/ 1p swap vertices >count ! ;
  
 : modeldata  ( primtype -- )
     0 , 0 , 0 , 0 , , ;
 
-: indices:  ( modeldata -- model adr )
+: indices:  ( modeldata -- modeldata adr )
     here over indices ! here  decimal ;
 
 : ;indices  ( modeldata adr -- )
     locals| adr model |
     here adr - cell/ model indices >count !  fixed ;
 
+: v[]  ( n modeldata - adr )  vertices @ swap /ALLEGRO_VERTEX * + ;
+
 
 \ Model objects
 
 %v3d sizeof field pos
 %v3d sizeof field scl
-0 field rtn  \ tilt, pan, roll  (i.e. pitch, yaw, roll)
+\ 0 field rtn  \ tilt, pan, roll  (i.e. pitch, yaw, roll)
     var tilt
     var pan
     var roll
-var mdl var tex
+var mdl <adr
+var tex <adr
 
 defaults >{
     1 1 1 scl 3!
@@ -63,11 +66,11 @@ create axis  3 cells allot
 : modelview
     t identity
     
-    t (1e) (0e) (0e)  roll @ 1pf d>r 1sf   al_rotate_transform_3d
+    t (1e) (0e) (0e)  tilt @ 1pf d>r 1sf   al_rotate_transform_3d
     t (0e) (1e) (0e)  pan @ 1pf d>r 1sf   al_rotate_transform_3d    
     (0e) (0e) (1e) axis 3! 
     t axis dup >y over >z al_transform_coordinates_3d    
-    t axis 3@  tilt @ 1pf d>r 1sf  al_rotate_transform_3d
+    t axis 3@  roll @ 1pf d>r 1sf  al_rotate_transform_3d
 
     t2 identity
     t2 scl 3@ 3af al_scale_transform_3d
