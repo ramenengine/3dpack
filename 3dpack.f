@@ -22,13 +22,6 @@ transform p
     ALLEGRO_DEPTH_TEST #1 al_set_render_state
     1 1af al_clear_depth_buffer 
 ;
-: 2d
-    p al_identity_transform
-    p 0 0 -16384 3af displaywh 16384 3af al_orthographic_transform
-    p al_use_projection_transform    
-    ALLEGRO_DEPTH_TEST #0 al_set_render_state
-;
-
 
 create pen3 0 , 0 , 0 ,
 : at3  pen3 3! ;
