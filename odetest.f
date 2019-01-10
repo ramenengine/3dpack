@@ -40,18 +40,13 @@ $7f800000 constant dInfinity
 ; #3 cb: nearcb
 
 : sim  ( -- )
-   \ const dReal *pos;
-   \ const dReal *R;
    \ find collisions and add contact joints
    space 0 nearcb dSpaceCollide
    \ step the simulation
    world 0.1 1af dWorldQuickStep 0= abort" There was an error"
    \ remove all contact joints
    contactgroup dJointGroupEmpty
-   \ redraw sphere at new location
-   \ pos = dGeomGetPosition (geom);
-   \ R = dGeomGetRotation (geom);
-   \ dsDrawSphere (pos,R,dGeomSphereGetRadius (geom));
+
 ;
 
 : init  ( -- )
