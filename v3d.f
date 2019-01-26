@@ -9,6 +9,7 @@ struct %v3d
 : >z cell+ cell+ ;
 : z@ >z @ ;
 : z! >z ! ;
+: z+! >z +! ;
 : 3negate  negate >r 2negate r> ;
 : 3mod  >r rot >r 2mod r> r> mod ;
 

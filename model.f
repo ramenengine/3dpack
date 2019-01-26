@@ -1,6 +1,6 @@
 depend 3dpack/v3d.f
 
-create cam object
+stage actor cam
 transform t
 transform t2
 transform t3
@@ -47,18 +47,20 @@ struct %modeldata
 
 \ Model objects
 
-%v3d sizeof field pos
-%v3d sizeof field scl
-\ 0 field rtn  \ tilt, pan, roll  (i.e. pitch, yaw, roll)
-    var tilt
-    var pan
-    var roll
-var mdl <adr
-var tex <adr
+extend-class _actor
+    %v3d sizeof field pos
+    %v3d sizeof field scl
+    \ 0 field rtn  \ tilt, pan, roll  (i.e. pitch, yaw, roll)
+        var tilt
+        var pan
+        var roll
+    var mdl <adr
+    var tex <adr
+end-class
 
-defaults >{
+_actor prototype as
     1 1 1 scl 3!
-}
+
 
 1e 1sf constant (1e)
 0e 1sf constant (0e)
@@ -72,7 +74,7 @@ create axis  3 cells allot
     t axis dup >y over >z al_transform_coordinates_3d    
     t axis 3@  tilt @ 1pf d>r 1sf  al_rotate_transform_3d
 
-    t2 identity
+    t2 identity 
     t2 scl 3@ 3af al_scale_transform_3d
     t2 t al_compose_transform
     t2 pos 3@ 3af al_translate_transform_3d
