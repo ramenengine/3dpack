@@ -122,8 +122,10 @@ create axis  3 cells allot
 \ : /globalmodel  mdl !  draw> +state -camt model -state ;
 
 0 value (code)
-: veach>  ( modeldata -- <code> )  ( ALLEGRO_VERTEX -- )
-    r> to (code)  vertices 2@ for  dup >r  (code) call  r> /ALLEGRO_VERTEX +  loop drop ;
+: veach  ( xt modeldata -- )  ( ALLEGRO_VERTEX -- )
+    swap >code to (code)  vertices 2@ for  dup >r  (code) call  r> /ALLEGRO_VERTEX +  loop drop ;
+: veach>  ( modeldata -- <code> )  
+    r> code> swap veach ;
 : transform-model  ( modeldata -- )  \ uses the "t" transform
     veach>  t swap vtransform ;
 
