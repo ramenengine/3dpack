@@ -1,6 +1,6 @@
 depend 3dpack/v3d.f
 
-stage actor cam
+stage actor: cam
 transform t
 transform t2
 transform t3
@@ -47,7 +47,7 @@ struct %modeldata
 
 \ Model objects
 
-extend-class _actor
+extend: _actor
     %v3d sizeof field pos
     %v3d sizeof field scl
     \ 0 field rtn  \ tilt, pan, roll  (i.e. pitch, yaw, roll)
@@ -56,7 +56,7 @@ extend-class _actor
         var roll
     var mdl <adr
     var tex <adr
-end-class
+;class
 
 _actor prototype as
     1 1 1 scl 3!
