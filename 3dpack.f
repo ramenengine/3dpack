@@ -7,7 +7,7 @@ depend 3dpack/cam3d.f     cr .( Loaded 3d camera module. ) \ "
 : 3r>  s" r> r> r>" evaluate ; immediate
 : 3over  #5 pick #5 pick #5 pick ;
 
-transform p 
+transform: p 
 80 value fov
 
 : f  fov >rad 2 / tan ;

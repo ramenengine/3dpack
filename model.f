@@ -1,10 +1,10 @@
 depend 3dpack/v3d.f
 
 stage actor: cam
-transform t
-transform t2
-transform t3
-transform camt
+transform: t
+transform: t2
+transform: t3
+transform: camt
 
 ALLEGRO_PRIM_LINE_LIST      constant LINE_LIST
 ALLEGRO_PRIM_LINE_STRIP     constant LINE_STRIP
@@ -66,7 +66,7 @@ _actor prototype as
 0e 1sf constant (0e)
 create axis  3 cells allot
 : modelview
-    t identity
+    t 0transform
     
     t (1e) (0e) (0e)  roll @ 1pf d>r 1sf   al_rotate_transform_3d
     t (0e) (1e) (0e)  pan @ 1pf d>r 1sf   al_rotate_transform_3d    
@@ -74,7 +74,7 @@ create axis  3 cells allot
     t axis dup >y over >z al_transform_coordinates_3d    
     t axis 3@  tilt @ 1pf d>r 1sf  al_rotate_transform_3d
 
-    t2 identity 
+    t2 0transform
     t2 scl 3@ 3af al_scale_transform_3d
     t2 t al_compose_transform
     t2 pos 3@ 3af al_translate_transform_3d
@@ -121,16 +121,24 @@ create axis  3 cells allot
 \ : -camt  camt al_identity_transform ;
 \ : /globalmodel  mdl !  draw> +state -camt model -state ;
 
+
 0 value (code)
+
 : veach  ( xt modeldata -- )  ( ALLEGRO_VERTEX -- )
-    swap >code to (code)  vertices 2@ for  dup >r  (code) call  r> /ALLEGRO_VERTEX +  loop drop ;
+    swap >code to (code)  vertices 2@ for
+        dup >r  (code) call  r> /ALLEGRO_VERTEX +
+    loop drop ;
+    
 : veach>  ( modeldata -- <code> )  
     r> code> swap veach ;
+    
 : transform-model  ( modeldata -- )  \ uses the "t" transform
     veach>  t swap vtransform ;
 
 
 create (v) 3 cells allot
+
 : 3f@p  dup sf@ f>p swap cell+ dup sf@ f>p swap cell+ sf@ f>p ;
+
 : local  ( x y z -- x y z )  \ transform local point  (note: expensive!)
     modelview  3af (v) 3!  t3 (v) vtransform   (v) 3f@p  ;
